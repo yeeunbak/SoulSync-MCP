@@ -5,6 +5,10 @@ from typing import Optional
 from src.mcp_server.store import save_mood_log, save_journal
 from src.mcp_server.resources import load_modules, load_crisis_numbers
 
+from src.mcp_server.gcal_client import create_event
+from src.mcp_server.gmail_client import create_draft
+from dateutil import parser as dtparser
+
 mcp = FastMCP("SoulSync-MCP")
 
 MODULES = load_modules()
@@ -38,3 +42,32 @@ def crisis_get_numbers(locale: str = "ko-KR") -> dict:
 # def calendar_create_event(datetime_iso: str, reason: str | None = None) -> dict: ...
 # @mcp.tool()
 # def gmail_compose_draft(to: str, subject: str, body: str) -> dict: ...
+@mcp.tool()
+def calendar_create_event(datetime_iso: str,
+                          duration_min: int = 60,
+                          reason: Optional[str] = None,
+                          timezone: str = "Asia/Seoul") -> dict:
+    """Google Calendar에 개인 이벤트 생성(알림·초대 없음)"""
+    return create_event(
+        start_iso=datetime_iso,
+        duration_min=duration_min,
+        summary="[확인됨] 상담 예약",
+        description=reason or "SoulSync에서 생성",
+        timezone=timezone
+    )
+
+@mcp.tool()
+def calendar_create_event_nl(datetime_text: str,
+                             duration_min: int = 60,
+                             reason: Optional[str] = None,
+                             timezone: str = "Asia/Seoul") -> dict:
+    """자연어 시간(예: '다음 주 수요일 3시')을 받아 이벤트 생성"""
+    dt = dtparser.parse(datetime_text, fuzzy=True)
+    if not dt:
+        raise ValueError("시간을 해석할 수 없습니다.")
+    return calendar_create_event(dt.isoformat(), duration_min, reason, timezone)
+
+@mcp.tool()
+def gmail_compose_draft(to: str, subject: str, body: str) -> dict:
+    """Gmail에 이메일 초안 생성(보내지 않음)"""
+    return create_draft(to, subject, body)
