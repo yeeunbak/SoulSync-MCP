@@ -89,24 +89,57 @@ def create_event_nl(
     }
 
 
-# --- compatibility wrapper for legacy imports ---
+# --- compatibility wrapper for legacy/variant imports ---
+from typing import Optional, Sequence, Any, Dict
+
 def create_event(
-    datetime_text: str,
-    duration_min: int,
-    summary: str,
-    timezone: str = "Asia/Seoul",
-    description: str | None = None,
-    location: str | None = None,
-    attendees: list[str] | None = None,
-):
+    *,
+    datetime_text: Optional[str] = None,   # NL 문자열 (예: "2025-08-27 15:00")
+    start_iso: Optional[str] = None,       # ISO 문자열 (예: "2025-08-27T15:00:00+09:00")
+    duration_min: Optional[int] = None,    # 분 단위
+    duration_minutes: Optional[int] = None,# 분 단위(다른 이름)
+    summary: Optional[str] = None,         # 제목
+    reason: Optional[str] = None,          # 제목의 다른 이름
+    timezone: str = "Asia/Seoul",          # 기본 타임존
+    tz: Optional[str] = None,              # 타임존의 다른 이름
+    description: Optional[str] = None,
+    location: Optional[str] = None,
+    attendees: Optional[Sequence[str]] = None,
+    **kwargs: Any,                         # 그 외 키워드 무시/흡수
+) -> Dict[str, Any]:
     """
-    Backward-compatible wrapper so older code that imports `create_event`
-    keeps working. Internally delegates to `create_event_nl`.
+    다양한 호출 시그니처를 호환하는 래퍼.
+    server.py가 start_iso/duration_minutes/ reason 등으로 호출해도 동작하게 매핑.
     """
+    # timezone 별칭 처리
+    if tz:
+        timezone = tz
+
+    # 시작시각 매핑: datetime_text 우선, 없으면 start_iso 사용
+    if not datetime_text:
+        datetime_text = start_iso
+    if not datetime_text:
+        raise ValueError("datetime_text or start_iso is required.")
+
+    # 지속시간 매핑
+    duration = None
+    if duration_min is not None:
+        duration = duration_min
+    elif duration_minutes is not None:
+        duration = duration_minutes
+    elif "duration" in kwargs and kwargs["duration"] is not None:
+        duration = int(kwargs["duration"])
+    if duration is None:
+        raise ValueError("duration_min/duration_minutes is required.")
+
+    # 제목 매핑
+    title = summary or reason or kwargs.get("title") or kwargs.get("name") or "Untitled"
+
+    # 최종 위임
     return create_event_nl(
         datetime_text=datetime_text,
-        duration_min=duration_min,
-        summary=summary,
+        duration_min=int(duration),
+        summary=title,
         timezone=timezone,
         description=description,
         location=location,
