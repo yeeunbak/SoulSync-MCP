@@ -12,3 +12,4 @@ storage/*token.json
 # Python
 __pycache__/
 *.pyc
+.pyc.*
