@@ -27,3 +27,12 @@ def compose_draft(to: str, subject: str, body: str) -> Dict[str, Any]:
 
     draft = service.users().drafts().create(userId="me", body={"message": {"raw": raw}}).execute()
     return {"id": draft.get("id"), "messageId": draft.get("message", {}).get("id")}
+
+# --- compatibility wrapper for legacy imports ---
+def create_draft(to: str, subject: str, body: str, **kwargs):
+    """
+    Backward-compatible wrapper so older code that imports `create_draft`
+    keeps working. Internally delegates to `compose_draft`.
+    Extra kwargs are ignored.
+    """
+    return compose_draft(to=to, subject=subject, body=body)
