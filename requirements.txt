@@ -4,3 +4,9 @@ pydantic>=2.6
 python-dotenv>=1.0
 requests>=2.31
 dateparser>=1.2
+
+google-api-python-client>=2.129.0
+google-auth>=2.30.0
+google-auth-httplib2>=0.2.0
+google-auth-oauthlib>=1.2.0
+python-dateutil>=2.9.0
