@@ -87,3 +87,28 @@ def create_event_nl(
         "start": created.get("start"),
         "end": created.get("end"),
     }
+
+
+# --- compatibility wrapper for legacy imports ---
+def create_event(
+    datetime_text: str,
+    duration_min: int,
+    summary: str,
+    timezone: str = "Asia/Seoul",
+    description: str | None = None,
+    location: str | None = None,
+    attendees: list[str] | None = None,
+):
+    """
+    Backward-compatible wrapper so older code that imports `create_event`
+    keeps working. Internally delegates to `create_event_nl`.
+    """
+    return create_event_nl(
+        datetime_text=datetime_text,
+        duration_min=duration_min,
+        summary=summary,
+        timezone=timezone,
+        description=description,
+        location=location,
+        attendees=attendees,
+    )
