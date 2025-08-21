@@ -1,4 +1,4 @@
-# secrets & tokens (절대 커밋 금지)
+# secrets & tokens
 secrets/
 secrets/*.json
 storage/
@@ -7,3 +7,8 @@ storage/*token.json
 # 환경변수 파일
 .env
 .env.*
+*.env
+
+# Python
+__pycache__/
+*.pyc
