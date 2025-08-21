@@ -16,6 +16,9 @@ from .resources import load_modules, load_crisis_numbers
 
 app = FastAPI(title="SoulSync MCP Server")
 
+from src.mcp_bridge.server import mcp
+app.mount("/mcp", mcp.streamable_http_app())
+
 MODULES = load_modules()
 CRISIS = load_crisis_numbers()
 
