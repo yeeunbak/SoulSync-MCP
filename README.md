@@ -80,6 +80,7 @@ msg['To']=formataddr((str(Header('받는사람','utf-8')),'your.real.address@gma
 msg['Subject']=str(Header('한 줄 테스트','utf-8'))
 raw=base64.urlsafe_b64encode(msg.as_bytes()).decode('utf-8')
 print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
+
 your.real.address@gmail.com에 실제 이메일 주소값 작성
   
 - Gcal
