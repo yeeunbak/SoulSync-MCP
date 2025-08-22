@@ -4,6 +4,8 @@
 - Python 3.10+ (권장 3.11)
 - Node.js LTS (npx 사용) → 명령어 node -v, npm -v 로 버전 확인
 
+
+
 ## 1) 가상환경설정
 
 1) 레포 폴더로 이동
@@ -21,6 +23,8 @@
    `pip install -U pip`
 
    `pip install -r requirements.txt`
+
+
 
 ## 2) Google Cloud 설정 ( Calendar & Gmail )
 
@@ -48,10 +52,14 @@
 - OAuth 클라이언트 ID 만들기
 - **애플리케이션 유형 : 데스크톱 앱** - JSON 최상위 키 "installed" ( 유형 따라 다르나, 현재 개발한 프로젝트 상에서는 앱으로만 작동 )
 - 생성 후 **JSON 다운로드** 후 이름 변경하여 screts 폴더에 저장 : gcal_credentials.json / gmail_credentials.json
+
+
   
 ## 3) OAuth 토큰 발급
 - Gmail :
 - Gcal :
+
+
   
 ## 4) MCP Inspector 실행 ( STDIO 연결 )
 #### 4-1) Inspector 켜기
@@ -77,6 +85,8 @@
   `TZ`                    = `Asia/Seoul`
 
 좌상단 Connect(▶) → 왼쪽에 Tools 목록이 보이면 연결 완료.
+
+
 
 ## 5) Tool Test
 #### 5-1) Calender_create_event_nl
