@@ -4,11 +4,11 @@ MCP : Google Calender, Gmail
 
 # 로컬 실행 가이드 ( MCP + Google Calendar/Gmail )
 
-### 요구사항
+## 요구사항
 - Python 3.10+ (권장 3.11)
 - Node.js LTS (npx 사용) → 명령어 node -v, npm -v 로 버전 확인
 
-### 1) 가상환경설정
+## 1) 가상환경설정
 
 1) 레포 폴더로 이동
 cd C:\SoulSync-MCP
@@ -19,9 +19,10 @@ python -m venv .venv
 
 3) 패키지 설치
 pip install -U pip
+
 pip install -r requirements.txt
 
-### 2) Google Clous 설정 ( Calendar & Gmail )
+## 2) Google Cloud 설정 ( Calendar & Gmail )
 
 #### 2-1) API 활성화
 - Google Cloud Console → API 및 서비스 → 라이브러리
@@ -64,9 +65,13 @@ npx @modelcontextprotocol/inspector
 - Environment Variables
   
   GCAL_CREDENTIALS_PATH = secrets/gcal_credentials.json
+  
   GMAIL_CREDENTIALS_PATH = secrets/gmail_credentials.json
+  
   GCAL_TOKEN_PATH       = storage/gcal_token.json
+  
   GMAIL_TOKEN_PATH      = storage/gmail_token.json
+  
   TZ                    = Asia/Seoul
 
 좌상단 Connect(▶) → 왼쪽에 Tools 목록이 보이면 연결 완료.
@@ -74,16 +79,24 @@ npx @modelcontextprotocol/inspector
 ## 5) Tool Test
 #### 5-1) Calender_create_event_nl
 입력 예시
+
   datetime_text: 2025-08-27 15:00
+  
   duration_min: 60
+  
   reason: 불안 관리 세션
+  
   timezone: Asia/Seoul
+  
 Run Tool → id, htmlLink 확인
 
 #### 5-2) gmail_compose_draft
 입력 예시
   to: you@example.com
+  
   subject: TEST
+  
   body: test
+  
 Run Tool → 초안 id, messageId 확인
   
