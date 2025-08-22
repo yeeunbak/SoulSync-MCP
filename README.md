@@ -2,7 +2,7 @@
 
 ### 요구사항
 - Python 3.10+ (권장 3.11)
-- Node.js LTS (npx 사용) → 명령어 node -v, npm -v 로 버전 확인
+- Node.js LTS (npx 사용) → `node -v` `npm -v` 버전 확인
 
 
 
