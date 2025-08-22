@@ -28,7 +28,7 @@
 - Google Cloud Console → API 및 서비스 → 라이브러리
 - Google Calendar API
 - Gmail API
-- 추후 필요한 API enable 시, 사용가능
+- 추후 필요한 API enable하여 추가
   
 #### 2-2) OAuth 동의화면
 - 사용자 유형 : 외부(External). 개인이 사용할 경우
