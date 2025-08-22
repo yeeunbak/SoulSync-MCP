@@ -1,4 +1,4 @@
-# 로컬 실행 가이드 ( MCP => Google Calendar + Gmail )
+# 로컬 실행 가이드 ( MCP : Google Calendar + Gmail )
 
 ### 요구사항
 - Python 3.10+ (권장 3.11)
