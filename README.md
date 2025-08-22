@@ -128,4 +128,19 @@
      body: `test`
   
    Run Tool → 초안 id, messageId 확인
-  
+
+---
+
+## *) 트러블슈팅
+
+- `redirect_uri_mismatch` : 웹(Web) 클라이언트 JSON 사용 - GCP에서 데스크톱 앱(Installed) 으로 새로 만들고 `secrets/*.json` 교체
+
+- `403 access_denied` : 동의화면에 계정 미등록 - 테스트 사용자에 본인 Gmail 추가
+
+- `insufficientPermissions` : 토큰 스코프 부족 - `storage/*token.json 삭제` → 토큰 재승인
+
+   ( 권한 꼬임 해소 Tip - `https://myaccount.google.com/permissions` 에서 기존 앱 권한 제거 → token.json 삭제 → 토큰 재승인 )
+
+- `secrets/` `storage/*token.json` `.gitignore` Commit 금지
+
+- JSON/토큰 교체 후에는 Inspector종료 후, 다시 시작
