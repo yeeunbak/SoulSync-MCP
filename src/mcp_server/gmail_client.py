@@ -8,6 +8,10 @@ from .config import GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES
 from .auth import ensure_credentials
 creds = ensure_credentials(GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES)
 
+from googleapiclient.discovery import build
+import base64
+from email.mime.text import MIMEText
+
 def _create_mime_text(to: str, subject: str, body: str) -> MIMEText:
     msg = MIMEText(body, _charset="utf-8")
     msg["to"] = to
@@ -36,14 +40,6 @@ def create_draft(to: str, subject: str, body: str, **kwargs):
     Extra kwargs are ignored.
     """
     return compose_draft(to=to, subject=subject, body=body)
-
-
-from googleapiclient.discovery import build
-import base64
-from email.mime.text import MIMEText
-
-from .config import GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES
-from .auth import ensure_credentials
 
 def _gmail_service():
     return build("gmail", "v1", credentials=creds)
