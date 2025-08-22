@@ -56,7 +56,7 @@
 - API 및 서비스 → 사용자 인증 정보
 - OAuth 클라이언트 ID 만들기
 - **애플리케이션 유형 : 데스크톱 앱** - JSON 최상위 키 "installed" ( 유형 따라 다르나, 현재 개발한 프로젝트 상에서는 앱으로만 작동 )
-- 생성 후 **JSON 다운로드** 후 이름 변경하여 screts 폴더에 저장 : gcal_credentials.json / gmail_credentials.json
+- 생성 후 **JSON 다운로드** 후 이름 변경하여 secrets 폴더에 저장 : gcal_credentials.json / gmail_credentials.json
 
 
   
