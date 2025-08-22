@@ -86,10 +86,10 @@
    `npx @modelcontextprotocol/inspector`
 
 #### 4-2) 연결 설정 (좌측 패널)
-- Transport Type : **STDIO**
-- Command : **C:\SoulSync-MCP\.venv\Scripts\python.exe**
-- Arguments : **run_mcp_stdio.py**
-- Working Directory : C:\SoulSync-MCP
+- Transport Type : `**STDIO**`
+- Command : `**C:\SoulSync-MCP\.venv\Scripts\python.exe**`
+- Arguments : `**run_mcp_stdio.py**`
+- Working Directory : `C:\SoulSync-MCP`
 - Environment Variables
   
   `GCAL_CREDENTIALS_PATH` = `secrets/gcal_credentials.json`
