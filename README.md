@@ -45,6 +45,8 @@
   Gmail: https://www.googleapis.com/auth/gmail.compose
   
   <img width="729" height="838" alt="image" src="https://github.com/user-attachments/assets/25a547ac-8256-4c08-8d5a-36679c6377cd" />
+
+  '범위 추가 또는 삭제' 선택
   
   <img width="608" height="110" alt="image" src="https://github.com/user-attachments/assets/12e3f237-6e63-4109-a679-4562e885b110" />
   
