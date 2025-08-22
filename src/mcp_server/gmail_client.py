@@ -12,6 +12,9 @@ from googleapiclient.discovery import build
 import base64
 from email.mime.text import MIMEText
 
+from email.header import Header
+from email.utils import formataddr
+
 def _create_mime_text(to: str, subject: str, body: str) -> MIMEText:
     msg = MIMEText(body, _charset="utf-8")
     msg["to"] = to
@@ -50,22 +53,27 @@ def _create_mime_text(to: str, subject: str, body: str) -> MIMEText:
     msg["subject"] = subject
     return msg
 
-def send_message(to: str, subject: str, body: str) -> dict:
+def send_message(to: str, subject: str, body: str, to_name: str | None = None) -> dict:
     """
-    새 이메일을 즉시 전송합니다. (초안 없이 바로 발송)
+    새 이메일을 즉시 전송 (초안 없이 바로 발송)
     """
     service = _gmail_service()
-    msg = _create_mime_text(to, subject, body)
+
+    # 본문은 UTF-8 텍스트
+    msg = MIMEText(body, _charset="utf-8")
+
+    # To 헤더: 한글 표시 이름을 안전하게 포함 (Invalid To header 방지)
+    msg["To"] = formataddr((str(Header(to_name, "utf-8")), to)) if to_name else to
+    msg["Subject"] = str(Header(subject, "utf-8"))
+
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode("utf-8")
     res = service.users().messages().send(userId="me", body={"raw": raw}).execute()
-    # 보통 res에는 id, threadId 등이 포함됩니다.
     return {"id": res.get("id"), "threadId": res.get("threadId"), "raw_response": res}
 
 def send_draft(draft_id: str) -> dict:
     """
-    미리 만들어둔 초안을 전송합니다. (compose_draft로 생성한 draft_id 필요)
+    기존에 만들어둔 초안(draft_id)을 전송
     """
     service = _gmail_service()
     res = service.users().drafts().send(userId="me", body={"id": draft_id}).execute()
-    # drafts.send는 Message 리소스를 반환합니다.
     return {"id": res.get("id"), "threadId": res.get("threadId"), "raw_response": res}
