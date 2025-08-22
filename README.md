@@ -8,19 +8,19 @@
 
 1) 레포 폴더로 이동
    
-   cd C:\SoulSync-MCP
+   `cd C:\SoulSync-MCP`
 
 2) 가상환경 생성/활성화
    
-   python -m venv .venv
+   `python -m venv .venv`
 
-   .\.venv\Scripts\Activate.ps1
+   `.\.venv\Scripts\Activate.ps1`
 
 3) 패키지 설치
 
-   pip install -U pip
+   `pip install -U pip`
 
-   pip install -r requirements.txt
+   `pip install -r requirements.txt`
 
 ## 2) Google Cloud 설정 ( Calendar & Gmail )
 
@@ -57,7 +57,7 @@
 #### 4-1) Inspector 켜기
 - 실행 전, Node.js 설치
   
-npx @modelcontextprotocol/inspector
+   `npx @modelcontextprotocol/inspector`
 
 #### 4-2) 연결 설정 (좌측 패널)
 - Transport Type : **STDIO**
@@ -66,39 +66,38 @@ npx @modelcontextprotocol/inspector
 - Working Directory : C:\SoulSync-MCP
 - Environment Variables
   
-  GCAL_CREDENTIALS_PATH = secrets/gcal_credentials.json
+  `GCAL_CREDENTIALS_PATH` = `secrets/gcal_credentials.json`
   
-  GMAIL_CREDENTIALS_PATH = secrets/gmail_credentials.json
+  `GMAIL_CREDENTIALS_PATH` = `secrets/gmail_credentials.json`
   
-  GCAL_TOKEN_PATH       = storage/gcal_token.json
+  `GCAL_TOKEN_PATH`       = `storage/gcal_token.json`
   
-  GMAIL_TOKEN_PATH      = storage/gmail_token.json
+  `GMAIL_TOKEN_PATH`      = `storage/gmail_token.json`
   
-  TZ                    = Asia/Seoul
+  `TZ`                    = `Asia/Seoul`
 
 좌상단 Connect(▶) → 왼쪽에 Tools 목록이 보이면 연결 완료.
 
 ## 5) Tool Test
 #### 5-1) Calender_create_event_nl
-입력 예시
 
-  datetime_text: 2025-08-27 15:00
+     datetime_text: `2025-08-27 15:00`
   
-  duration_min: 60
+     duration_min: `60`
   
-  reason: 불안 관리 세션
+     reason: `불안 관리 세션`
   
-  timezone: Asia/Seoul
-  
-Run Tool → id, htmlLink 확인
+     timezone: `Asia/Seoul`
+     
+   Run Tool → id, htmlLink 확인
 
 #### 5-2) gmail_compose_draft
-입력 예시
-  to: you@example.com
+
+     to: `you@example.com`
   
-  subject: TEST
+     subject: `TEST`
   
-  body: test
+     body: `test`
   
-Run Tool → 초안 id, messageId 확인
+   Run Tool → 초안 id, messageId 확인
   
