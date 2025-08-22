@@ -99,6 +99,3 @@ def invoke_gmail_send_draft(payload: GmailSendDraft):
         return send_draft(payload.draft_id)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Gmail send_draft error: {e}")
-
-# 개발용 실행 힌트:
-# uvicorn src.mcp_server.main:app --host 127.0.0.1 --port 8088
