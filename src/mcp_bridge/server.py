@@ -37,11 +37,7 @@ def crisis_get_numbers(locale: str = "ko-KR") -> dict:
     """지역 위기 연락처 반환(출시 전 최신화 필요)"""
     return CRISIS
 
-# (선택) 나중에 구글 캘린더/지메일 래핑 도구도 여기로 추가 가능
-# @mcp.tool()
-# def calendar_create_event(datetime_iso: str, reason: str | None = None) -> dict: ...
-# @mcp.tool()
-# def gmail_compose_draft(to: str, subject: str, body: str) -> dict: ...
+
 @mcp.tool()
 def calendar_create_event(datetime_iso: str,
                           duration_min: int = 60,
