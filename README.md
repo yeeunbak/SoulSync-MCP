@@ -39,14 +39,16 @@
 - 게시 상태: 테스트 중(Testing)
 - 테스트 사용자: 본인 Gmail 추가 → 저장
 - Scope 설정
-  
-  Calendar: https://www.googleapis.com/auth/calendar.events
-  
-  Gmail: https://www.googleapis.com/auth/gmail.compose
+
+  아래 사진과 같이 설정
   
   <img width="729" height="838" alt="image" src="https://github.com/user-attachments/assets/25a547ac-8256-4c08-8d5a-36679c6377cd" />
 
   '범위 추가 또는 삭제' 선택
+
+   Calendar: https://www.googleapis.com/auth/calendar.events
+
+   Gmail: https://www.googleapis.com/auth/gmail.compose
   
   <img width="608" height="110" alt="image" src="https://github.com/user-attachments/assets/12e3f237-6e63-4109-a679-4562e885b110" />
   
