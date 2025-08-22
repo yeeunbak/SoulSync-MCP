@@ -6,7 +6,7 @@ from src.mcp_server.store import save_mood_log, save_journal
 from src.mcp_server.resources import load_modules, load_crisis_numbers
 
 from src.mcp_server.gcal_client import create_event
-from src.mcp_server.gmail_client import create_draft
+from src.mcp_server.gmail_client import create_draft, send_message, send_draft
 from dateutil import parser as dtparser
 
 mcp = FastMCP("SoulSync-MCP")
@@ -71,3 +71,20 @@ def calendar_create_event_nl(datetime_text: str,
 def gmail_compose_draft(to: str, subject: str, body: str) -> dict:
     """Gmail에 이메일 초안 생성(보내지 않음)"""
     return create_draft(to, subject, body)
+
+@mcp.tool()
+def gmail_send(to: str, subject: str, body: str, to_name: str | None = None) -> dict:
+    """
+    Gmail로 이메일을 즉시 전송합니다.
+    - to: 수신자 이메일 (예: user@example.com)
+    - to_name: 수신자 표시 이름(옵션, 예: '홍길동')
+    """
+    return send_message(to=to, subject=subject, body=body, to_name=to_name)
+
+@mcp.tool()
+def gmail_send_draft(draft_id: str) -> dict:
+    """
+    compose_draft로 만든 초안을 전송합니다.
+    - draft_id: 초안 ID
+    """
+    return send_draft(draft_id)
