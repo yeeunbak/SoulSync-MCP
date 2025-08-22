@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 
 from .config import GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES
 from .auth import ensure_credentials
-
+creds = ensure_credentials(GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES)
 
 def _create_mime_text(to: str, subject: str, body: str) -> MIMEText:
     msg = MIMEText(body, _charset="utf-8")
