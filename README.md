@@ -61,11 +61,18 @@
 
   
 ## 3) OAuth 토큰 발급
-- Gmail :
-- Gcal :
 
+1) venv 활성화 상태에서 명령어 입력
 
+- Gmail : `python -c "from src.mcp_server.auth import ensure_credentials; from src.mcp_server.config import GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES; c=ensure_credentials(GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES); print('GMAIL token ->', GMAIL_TOKEN_PATH); print('Scopes:', getattr(c,'scopes',None))"`
   
+- Gcal : `python -c "from src.mcp_server.auth import ensure_credentials; from src.mcp_server.config import GCAL_CREDENTIALS_PATH, GCAL_TOKEN_PATH, GCAL_SCOPES; c=ensure_credentials(GCAL_CREDENTIALS_PATH, GCAL_TOKEN_PATH, GCAL_SCOPES); print('GCAL token ->', GCAL_TOKEN_PATH); print('Scopes:', getattr(c,'scopes',None))"`
+ 
+2) 팝업창으로 뜨는 링크에서 권한 확인
+
+3) storage폴더에 gcal_token.json / gmail_token.json 생성됨
+   
+
 ## 4) MCP Inspector 실행 ( STDIO 연결 )
 #### 4-1) Inspector 켜기
 - 실행 전, Node.js 설치
