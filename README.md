@@ -64,10 +64,23 @@
 
 1) venv 활성화 상태에서 명령어 입력
 
-- Gmail
+- Gmail 초안 작성
 
    `python -c "from src.mcp_server.auth import ensure_credentials; from src.mcp_server.config import GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES; c=ensure_credentials(GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH, GMAIL_SCOPES); print('GMAIL token ->', GMAIL_TOKEN_PATH); print('Scopes:', getattr(c,'scopes',None))"`
 
+- Gmail 전송
+
+   `python -c "import base64;from email.mime.text import MIMEText;from googleapiclient.discovery import build;from google_auth_oauthlib.flow import InstalledAppFlow;from google.oauth2.credentials import Credentials;from email.utils import formataddr;from email.header import Header;import os;CREDS='secrets/gmail_credentials.json';TOKEN='storage/gmail_token.json';SCOPES=['https://www.googleapis.com/auth/gmail.compose'];creds=None;import pathlib
+if os.path.exists(TOKEN): creds=Credentials.from_authorized_user_file(TOKEN, SCOPES)
+if not creds or not creds.valid or not set(SCOPES).issubset(set(getattr(creds,'scopes',[]) or [])):
+    flow=InstalledAppFlow.from_client_secrets_file(CREDS, SCOPES);creds=flow.run_local_server(port=0);open(TOKEN,'w',encoding='utf-8').write(creds.to_json())
+service=build('gmail','v1',credentials=creds)
+msg=MIMEText('한 줄 테스트 본문입니다.','plain','utf-8')
+msg['To']=formataddr((str(Header('받는사람','utf-8')),'your.real.address@gmail.com'))
+msg['Subject']=str(Header('한 줄 테스트','utf-8'))
+raw=base64.urlsafe_b64encode(msg.as_bytes()).decode('utf-8')
+print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
+your.real.address@gmail.com에 실제 이메일 주소값 작성
   
 - Gcal
 
