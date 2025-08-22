@@ -1,10 +1,6 @@
-Prompt -> MCP server -> AI Agent
-
-MCP : Google Calender, Gmail
-
 # 로컬 실행 가이드 ( MCP + Google Calendar/Gmail )
 
-## 요구사항
+### 요구사항
 - Python 3.10+ (권장 3.11)
 - Node.js LTS (npx 사용) → 명령어 node -v, npm -v 로 버전 확인
 
@@ -13,11 +9,14 @@ MCP : Google Calender, Gmail
 1) 레포 폴더로 이동
 cd C:\SoulSync-MCP
 
-3) 가상환경 생성/활성화
+2) 가상환경 생성/활성화
+   
 python -m venv .venv
+
 .\.venv\Scripts\Activate.ps1
 
 3) 패키지 설치
+
 pip install -U pip
 
 pip install -r requirements.txt
@@ -35,6 +34,7 @@ pip install -r requirements.txt
 - 게시 상태: 테스트 중(Testing)
 - 테스트 사용자: 본인 Gmail 추가 → 저장
 - Scope 설정
+  
   Calendar: https://www.googleapis.com/auth/calendar.events
   
   Gmail: https://www.googleapis.com/auth/gmail.compose
@@ -55,6 +55,7 @@ pip install -r requirements.txt
 ## 4) MCP Inspector 실행 ( STDIO 연결 )
 #### 4-1) Inspector 켜기
 - 실행 전, Node.js 설치
+  
 npx @modelcontextprotocol/inspector
 
 #### 4-2) 연결 설정 (좌측 패널)
