@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from .config import MCP_HOST, MCP_PORT
 from .gcal_client import create_event_nl
-from .gmail_client import compose_draft
+from .gmail_client import compose_draft, send_message, send_draft  # ← send 함수들 추가 임포트
 
 app = FastAPI(title="SoulSync MCP Server")
 
@@ -20,6 +20,14 @@ class GmailComposeDraft(BaseModel):
     to: str
     subject: str
     body: str
+
+class GmailSend(BaseModel):
+    to: str
+    subject: str
+    body: str
+
+class GmailSendDraft(BaseModel):
+    draft_id: str
 
 
 # ---- Capabilities ----
@@ -78,6 +86,19 @@ def invoke_gmail_compose_draft(payload: GmailComposeDraft):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Gmail error: {e}")
 
+@app.post("/gmail.send")
+def invoke_gmail_send(payload: GmailSend):
+    try:
+        return send_message(payload.to, payload.subject, payload.body)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Gmail send error: {e}")
+
+@app.post("/gmail.send_draft")
+def invoke_gmail_send_draft(payload: GmailSendDraft):
+    try:
+        return send_draft(payload.draft_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Gmail send_draft error: {e}")
 
 # 개발용 실행 힌트:
 # uvicorn src.mcp_server.main:app --host 127.0.0.1 --port 8088

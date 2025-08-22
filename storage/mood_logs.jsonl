@@ -1,3 +1,4 @@
 {"log_id": "94257f25-c2f3-41c1-ae19-17b21c425942", "ts": "2025-08-20T07:35:28.875788Z", "user_id": "string", "valence": -2, "sleep_hours": 24.0, "anxiety0_10": 10}
 {"log_id": "b1efac02-1fc6-407c-8180-3659eb2274cd", "ts": "2025-08-20T07:44:49.584734Z", "user_id": "demo-user", "valence": -1, "sleep_hours": null, "anxiety0_10": 7}
 {"log_id": "38587d09-2567-4999-8f7b-50191b8060dd", "ts": "2025-08-20T07:51:10.738687Z", "user_id": "string", "valence": -2, "sleep_hours": 24.0, "anxiety0_10": 10}
+{"log_id": "c94f320c-0e51-4a69-8c19-1bb9ccc26891", "ts": "2025-08-22T06:56:16.255739Z", "user_id": "dev", "valence": 3, "sleep_hours": null, "anxiety0_10": null}
