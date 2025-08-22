@@ -8,17 +8,17 @@
 
 ## 1) 가상환경설정
 
-1)  레포 폴더로 이동
+1) 레포 폴더로 이동
    
    `cd C:\SoulSync-MCP`
 
-2)  가상환경 생성/활성화
+2) 가상환경 생성/활성화
    
    `python -m venv .venv`
 
    `.\.venv\Scripts\Activate.ps1`
 
-3)  패키지 설치
+3) 패키지 설치
 
    `pip install -U pip`
 
