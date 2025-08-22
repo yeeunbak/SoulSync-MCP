@@ -35,6 +35,7 @@ pip install -r requirements.txt
 - 테스트 사용자: 본인 Gmail 추가 → 저장
 - Scope 설정
   Calendar: https://www.googleapis.com/auth/calendar.events
+  
   Gmail: https://www.googleapis.com/auth/gmail.compose
   
   <img width="729" height="838" alt="image" src="https://github.com/user-attachments/assets/25a547ac-8256-4c08-8d5a-36679c6377cd" />
