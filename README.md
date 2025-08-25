@@ -24,17 +24,54 @@
 
    `pip install -r requirements.txt`
 
+## 2) Flow Chart
 
+```mermaid
+flowchart LR
+  subgraph Client["사용자 인터페이스"]
+    UI["Agent UI (추후) 또는 MCP Inspector"]
+  end
 
-## 2) Google Cloud 설정 ( Calendar & Gmail )
+  subgraph Agent["AI Agent (추후 연결)"]
+    Planner["NLU / Planner\n(의도 파악·파라미터 추출·도구선택)"]
+    Memory["Agent Memory / 로그(선택)"]
+    Planner --- Memory
+  end
 
-#### 2-1) API 활성화
+  subgraph MCP["SoulSync-MCP 서버"]
+    direction TB
+    Tools["Tools\n- gmail_compose_draft\n- calendar_create_event_nl\n- ...(확장)"]
+    Auth["OAuth 토큰/자격\n(secrets/, storage/)"]
+    Tools --- Auth
+  end
+
+  subgraph External["외부 서비스"]
+    GmailAPI["Gmail API"]
+    GCalAPI["Google Calendar API"]
+  end
+
+  UI -->|"자연어 요청"| Agent
+  Agent -->|"MCP 프로토콜 (JSON-RPC/STDIO)"| MCP
+  MCP -->|"Tool 실행"| Tools
+  Tools -->|"OAuth2 호출"| GmailAPI
+  Tools -->|"OAuth2 호출"| GCalAPI
+  GmailAPI --> Tools
+  GCalAPI --> Tools
+  Tools --> MCP
+  MCP --> Agent
+  Agent -->|"요약/결과"| UI
+
+```
+
+## 3) Google Cloud 설정 ( Calendar & Gmail )
+
+#### 3-1) API 활성화
 - Google Cloud Console → API 및 서비스 → 라이브러리
 - Google Calendar API
 - Gmail API
 - 추후 필요한 API enable하여 추가
   
-#### 2-2) OAuth 동의화면
+#### 3-2) OAuth 동의화면
 - 사용자 유형 : 외부(External). 개인이 사용할 경우
 - 게시 상태: 테스트 중(Testing)
 - 테스트 사용자: 본인 Gmail 추가 → 저장
@@ -52,7 +89,7 @@
   
   <img width="608" height="110" alt="image" src="https://github.com/user-attachments/assets/12e3f237-6e63-4109-a679-4562e885b110" />
   
-#### 2-3) OAuth 클라이언트 ID
+#### 3-3) OAuth 클라이언트 ID
 - API 및 서비스 → 사용자 인증 정보
 - OAuth 클라이언트 ID 만들기
 - **애플리케이션 유형 : 데스크톱 앱** - JSON 최상위 키 "installed" ( 유형 따라 다르나, 현재 개발한 프로젝트 상에서는 앱으로만 작동 )
@@ -60,7 +97,7 @@
 
 
   
-## 3) OAuth 토큰 발급
+## 4) OAuth 토큰 발급
 
 1) venv 활성화 상태에서 명령어 입력
 
@@ -93,13 +130,13 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
 3) storage폴더에 `gcal_token.json` / `gmail_token.json` 생성됨
    
 
-## 4) MCP Inspector 실행 ( STDIO 연결 )
-#### 4-1) Inspector 켜기
+## 5) MCP Inspector 실행 ( STDIO 연결 )
+#### 5-1) Inspector 켜기
 - 실행 전, Node.js 설치
   
    `npx @modelcontextprotocol/inspector`
 
-#### 4-2) 연결 설정 (좌측 패널)
+#### 5-2) 연결 설정 (좌측 패널)
 - Transport Type : `STDIO`
 - Command : `C:\SoulSync-MCP\.venv\Scripts\python.exe`
 - Arguments : `run_mcp_stdio.py`
@@ -120,8 +157,9 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
 
 
 
-## 5) Tool Test
-#### 5-1) Calender_create_event_nl
+## 6) Tool Test
+
+#### 6-1) Calender_create_event_nl
 
      datetime_text: `2025-08-27 15:00`
   
@@ -133,7 +171,7 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
      
    Run Tool → id, htmlLink 확인
 
-#### 5-2) gmail_compose_draft
+#### 6-2) gmail_compose_draft
 
      to: `you@example.com`
   
@@ -144,6 +182,28 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
    Run Tool → 초안 id, messageId 확인
 
 ---
+
+## 7) Mail 보내기 Flow Chart
+
+```mermaid
+sequenceDiagram
+  actor User as 사용자
+  participant UI as Agent UI / MCP Inspector
+  participant Agent as AI Agent (추후)
+  participant MCP as SoulSync-MCP
+  participant Gmail as Gmail API
+
+  User->>UI: "내일 회의 공지 이메일 만들어줘"
+  UI->>Agent: 자연어 요청 전달
+  Agent->>Agent: 의도 파악/파라미터 추출/도구 선택
+  Agent->>MCP: tools.gmail_compose_draft(제목, 본문, 수신자)
+  MCP->>Gmail: drafts.create (OAuth)
+  Gmail-->>MCP: Draft ID/결과
+  MCP-->>Agent: Tool 결과(초안 링크/상태)
+  Agent-->>UI: 완료 안내 + 요약/링크
+  UI-->>User: 결과 표시
+
+```
 
 ## *) 트러블슈팅
 
