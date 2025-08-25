@@ -3,6 +3,7 @@ secrets/
 secrets/*.json
 storage/
 storage/*token.json
+storage/*.jsonl
 
 # 환경변수 파일
 .env
