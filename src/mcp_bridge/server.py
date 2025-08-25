@@ -69,6 +69,14 @@ def gmail_compose_draft(to: str, subject: str, body: str) -> dict:
     return create_draft(to, subject, body)
 
 @mcp.tool()
+def gmail_send_draft(draft_id: str) -> dict:
+    """
+    compose_draft로 만든 초안을 전송합니다.
+    - draft_id: 초안 ID
+    """
+    return send_draft(draft_id)
+
+@mcp.tool()
 def gmail_send(to: str, subject: str, body: str, to_name: str | None = None) -> dict:
     """
     Gmail로 이메일을 즉시 전송합니다.
@@ -76,11 +84,3 @@ def gmail_send(to: str, subject: str, body: str, to_name: str | None = None) -> 
     - to_name: 수신자 표시 이름(옵션, 예: '홍길동')
     """
     return send_message(to=to, subject=subject, body=body, to_name=to_name)
-
-@mcp.tool()
-def gmail_send_draft(draft_id: str) -> dict:
-    """
-    compose_draft로 만든 초안을 전송합니다.
-    - draft_id: 초안 ID
-    """
-    return send_draft(draft_id)
