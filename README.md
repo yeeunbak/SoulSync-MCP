@@ -205,32 +205,37 @@ sequenceDiagram
 
 ```
 
-## *) 필요한 AI 모델 구상
+## *) 구상도도
 
 ```mermaid
 flowchart LR
   %% =========================
-  %% SoulSync-MCP Component Diagram
+  %% SoulSync-MCP Component Diagram (LR, with 1→2→3)
   %% =========================
 
+  %% --- Client ---
   subgraph Client["클라이언트"]
     U[사용자]
-    UI[웹앱 / Chat UI]
-    U --> UI
+    UI[웹앱 / Chat UI<br/>감정 게이지 시각화]
+    U -. 대화/저널 .-> UI
   end
 
+  %% --- Backend ---
   subgraph Backend["SoulSync 서비스 백엔드"]
-    ORCH["대화 오케스트레이터 LLM<br/>(Function-calling)"]
+    ORCH["대화 오케스트레이터 LLM<br/>(Function-calling, Persona)"]
     SAFETY["안전성·위기 라우터<br/>(다중라벨 분류기 + 규칙)"]
-    EMO["감정·정서 분석기<br/>(감성/정서/각성도)"]
-    SCORE["임상척도 스코어러<br/>(PHQ-9 / GAD-7)"]
-    SUM["세션 요약기<br/>(대화/저널 요약)"]
-    PERS["페르소나 스타일러<br/>(4 캐릭터)"]
-    RAG["개인화 메모리 / RAG<br/>(검색·인용)"]
-    AGENT["툴 액션 에이전트<br/>(파라미터 검증기 포함)"]
     POLICY["윤리·정책 템플릿 엔진"]
+
+    EMB["임베딩·대화분석기<br/>(한국어 Bi-encoder)"]
+    RAG["개인화 메모리 / RAG<br/>(검색·인용)"]
+    SCORE["감정 스코어러<br/>(프로토타입 결합 + EMA)"]
+
+    SUM["세션 요약기"]
+    PERS["페르소나 스타일러<br/>(4 캐릭터)"]
+    AGENT["툴 액션 에이전트<br/>(파라미터 검증 포함)"]
   end
 
+  %% --- MCP ---
   subgraph MCP["MCP 통합 계층"]
     MCPS["MCP 서버"]
     GMAIL["Gmail Tool"]
@@ -239,36 +244,38 @@ flowchart LR
     CRISIS["지역 위기 리소스"]
   end
 
+  %% --- Storage / Infra ---
   subgraph Storage["저장소·인프라"]
-    VDB["벡터DB (문맥/메모리)"]
+    VDB["벡터DB(감정표/대화로그/지식)"]
     LOG["감사 로그 / 대화 이력"]
     VAULT["시크릿 금고(자격증명)"]
   end
 
-  %% -------- Data/Control Flows --------
-  U -. 대화/저널 .-> UI
+  %% -------- Flows --------
   UI <--> ORCH
 
   ORCH --> SAFETY
-  SAFETY --> ORCH
   SAFETY --> POLICY
   POLICY --> ORCH
 
-  ORCH --> EMO
-  EMO --> ORCH
-
-  ORCH <--> RAG
+  %% 1→2→3 파이프라인
+  ORCH -- "(1) 대화로그 임베딩·분석" --> EMB
+  ORCH -- "(2) 감정표·대화로그 벡터 비교" --> RAG
   RAG <--> VDB
+  ORCH -- "(3) 게이지 산출" --> SCORE
+  SCORE --> UI
 
-  ORCH <--> SCORE
-
-  ORCH --> PERS
+  %% RAG 답변 생성/요약
+  ORCH <--> RAG
   ORCH --> SUM
   SUM --> LOG
 
+  %% 페르소나
+  ORCH --> PERS
+
+  %% MCP 툴 실행
   ORCH --> AGENT
   AGENT <--> MCPS
-
   MCPS --> GMAIL
   MCPS --> GCAL
   MCPS --> HOSP
@@ -278,17 +285,16 @@ flowchart LR
   ORCH --> LOG
   AGENT --> LOG
 
-  %% -------- Styling (optional) --------
+  %% -------- Styling --------
   classDef core fill:#1f77b4,stroke:#0b2a4a,stroke-width:1,color:#fff;
   classDef aux fill:#2ca02c,stroke:#0b2a4a,stroke-width:1,color:#fff;
   classDef infra fill:#9467bd,stroke:#2f1a45,stroke-width:1,color:#fff;
 
   class ORCH,AGENT,RAG core;
-  class SAFETY,EMO,SCORE,SUM,PERS,POLICY aux;
+  class SAFETY,EMB,SCORE,SUM,PERS,POLICY aux;
   class MCPS,GMAIL,GCAL,HOSP,CRISIS,VDB,LOG,VAULT infra;
 
 ```
-
 ## *) 트러블슈팅
 
 - `redirect_uri_mismatch` : 웹(Web) 클라이언트 JSON 사용 - GCP에서 데스크톱 앱(Installed) 으로 새로 만들고 `secrets/*.json` 교체
