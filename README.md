@@ -205,7 +205,7 @@ sequenceDiagram
 
 ```
 
-## *) 구상도도
+## *) 구상도
 
 ```mermaid
 flowchart LR
