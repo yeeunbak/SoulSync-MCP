@@ -153,15 +153,18 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
   
   `TZ`                    = `Asia/Seoul`
 
+
 좌상단 Connect(▶) → 왼쪽에 Tools 목록이 보이면 연결 완료.
 
+
+<img width="1899" height="884" alt="image" src="https://github.com/user-attachments/assets/5c69867c-c941-4590-bfee-6bb272c1a3b1" />
 
 
 ## 6) Tool Test
 
 #### 6-1) Calender_create_event_nl
 
-     datetime_text: `2025-08-27 15:00`
+     datetime_text: `2025-09-07 07:00`
   
      duration_min: `60`
   
@@ -169,7 +172,17 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
   
      timezone: `Asia/Seoul`
      
-   Run Tool → id, htmlLink 확인
+
+<img width="829" height="372" alt="image" src="https://github.com/user-attachments/assets/45756a10-0dad-4f0f-b552-c797e50eb11e" />
+
+
+Run Tool → id, htmlLink 확인
+
+
+<img width="916" height="524" alt="image" src="https://github.com/user-attachments/assets/bee11376-545b-479a-ba5c-494bf6e7e646" />
+
+Google Calendar에 일정 추가가 완료됨.
+
 
 #### 6-2) gmail_compose_draft
 
@@ -180,6 +193,20 @@ print(service.users().messages().send(userId='me',body={'raw':raw}).execute())"`
      body: `test`
   
    Run Tool → 초안 id, messageId 확인
+
+   <img width="774" height="568" alt="image" src="https://github.com/user-attachments/assets/1c8e4c38-0fe4-4fd9-a909-884bdad4efe4" />
+
+#### 6-2) gmail_send_draft
+
+   <img width="761" height="256" alt="image" src="https://github.com/user-attachments/assets/cb3c6698-ff46-48e1-bc03-e0633f49103c" />
+
+   Gmail을 통해 이메일 전송이 완료됨.
+
+
+#### 6-2) gmail_send
+
+gmail_compose_draft 형식 + 수신자 표시
+앞선 tool과 동일하게 진행하면 Gmail을 통해 이메일이 바로 전송됨.
 
 ---
 
