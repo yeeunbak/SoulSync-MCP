@@ -232,7 +232,7 @@ sequenceDiagram
 
 ```
 
-## *) 구상도
+## *) 추후 구상도 ( AI agent + MCP )
 
 ```mermaid
 flowchart LR
